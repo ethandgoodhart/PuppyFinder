@@ -72,8 +72,51 @@
 </head>
 <body>
 
-<h1 style="color: white; font-size: 100px; text-align: center; margin-top: -35vh; margin-bottom: 15vh;"><img src="dog_white.png" style="height: 100px; width: 100px; margin-right: 50px;">PuppyFinder</h1>
-<input type="" name="" placeholder="Search for a puppy">
+<div id="logo" style="opacity: 1;"><h1 style="color: white; font-size: 100px; text-align: center; margin-top: -35vh; margin-bottom: 15vh;"><img src="dog_white.png" style="height: 100px; width: 100px; margin-right: 50px;">PuppyFinder</h1></div>
+<input type="" name="" id="s" placeholder="Search for a puppy" onkeyup="updateResults()" style="position: absolute; left: 20%;" autocomplete="off">
+<div id="results"></div>
+
+<script type="text/javascript">
+	var hasFaded = false;
+
+	function updateResults() {
+		if (!hasFaded) {
+			$("#logo").fadeTo("slow", 0);
+			
+			$("input").animate({ 
+	        	top: "-=300px",
+	      	}, 1000);
+
+	      	hasFaded = true;
+		} else if (document.getElementById('s').value == "") {
+			$("#logo").fadeTo("slow", 1);
+			
+			$("input").animate({ 
+	        	top: "+=300px",
+	      	}, 1000);
+
+	      	hasFaded = false;
+		}
+
+		addPuppiesForQuery(document.getElementById('s').value);
+	}
+
+	function clearResults() {
+		document.getElementById('results').innerHTML = "";
+	}
+
+	function addPuppiesForQuery(query) {
+		if (query.trim() == "") {
+			clearResults();
+		} else {
+			clearResults();
+
+			if (query.toLocaleLowerCase().includes("golden")) {
+				$("#results").append('<div id="puppy" style="border: 2.5px solid rgba(246, 246, 246); border-radius: 25px; height: 350px; width: 305px;"><img src="https://lifestyle.reviews/wp-content/uploads/2020/08/Golden-Retriever-Puppy-Sitting-On-Grass.jpeg" style="width: 300px; height: 250px; display: block; margin-left: auto; margin-right: auto; border-bottom: 2.5px solid rgba(246, 246, 246); border-top-left-radius: 25px; border-top-right-radius: 25px;"><h2 style="color: white; padding-left: 15px; padding-top: 15px; margin-top: -3px;">Walter, 25</h2><h4 style="color: lightgrey; padding-left: 15px; margin-top: -5px;">Golden Retriever</h4></div>');
+			}
+		}
+	}
+</script>
 
 </body>
 </html>
